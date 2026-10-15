@@ -84,6 +84,10 @@ Out-of-range or invalid values return `400` with the reason.
 
 Successful responses carry `Cache-Control: public, max-age=86400, s-maxage=604800`. When `f` is omitted, they also carry `Vary: Accept`.
 
+## Use with AI assistants
+
+Give an assistant the link to [AI.md](AI.md) (or its raw URL, `https://raw.githubusercontent.com/Lapius7/img-parameter.wks.lapius7.com/main/AI.md`) together with your image URL and the edit you want. It returns a ready-to-use URL.
+
 ## Setup
 
 Requirements:

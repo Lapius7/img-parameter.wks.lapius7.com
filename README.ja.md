@@ -84,6 +84,10 @@ GET https://img-parameter.wks.lapius7.com/?url=<画像のURL>&<加工パラメ�
 
 成功時は `Cache-Control: public, max-age=86400, s-maxage=604800` を付けて返します。`f` を省略した場合は `Vary: Accept` も付けます。
 
+## AI アシスタントで使う
+
+[AI.md](AI.md)（raw の URL は `https://raw.githubusercontent.com/Lapius7/img-parameter.wks.lapius7.com/main/AI.md`）のリンクを、画像の URL とやりたい加工と一緒に AI に渡すと、使える形の URL を返します。
+
 ## セットアップ
 
 必要なもの:
