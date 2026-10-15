@@ -2,7 +2,7 @@
 
 [日本語](README.ja.md)
 
-An image transform API for Cloudflare Workers. Put the source image URL and the edits in the query string, and get the processed image back. There is no build step and no pre-generated variants. The resulting URL works as-is in `<img src>` or CSS `background-image`.
+An image transform API for Cloudflare Workers. Put the source image URL and the edits in the query string, and get the processed image back. There are no pre-generated variants. The resulting URL works as-is in `<img src>` or CSS `background-image`.
 
 ```html
 <img
@@ -10,6 +10,10 @@ An image transform API for Cloudflare Workers. Put the source image URL and the 
   alt="Sample image"
 >
 ```
+
+## Build a URL in the browser
+
+Open [img-parameter.wks.lapius7.com](https://img-parameter.wks.lapius7.com/) with no parameters. Change the options in the form, check the preview, and copy the generated URL.
 
 ## Just ask an AI
 
@@ -106,8 +110,9 @@ Requirements:
 
 ```sh
 pnpm install
+pnpm build    # build the form UI into public/
 pnpm dev      # run locally
-pnpm deploy   # deploy to Cloudflare
+pnpm deploy   # build, then deploy to Cloudflare
 ```
 
 Change the public domain in `routes` in `wrangler.jsonc`.

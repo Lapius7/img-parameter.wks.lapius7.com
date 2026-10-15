@@ -127,41 +127,6 @@ function checkSource(raw: string | null, env: Env): URL {
 	return src;
 }
 
-const REPO_URL = "https://github.com/Lapius7/img-parameter.wks.lapius7.com";
-
-const TOP_PAGE = `<!doctype html>
-<html lang="ja">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>img-parameter</title>
-<meta name="description" content="URLのパラメータで画像を加工して返すAPI">
-<style>
-:root{color-scheme:light dark;--bg:#fff;--fg:#111;--sub:#666;--line:#e5e5e5;--code:#f5f5f5}
-@media(prefers-color-scheme:dark){:root{--bg:#111;--fg:#eee;--sub:#999;--line:#2a2a2a;--code:#1c1c1c}}
-*{box-sizing:border-box}
-body{margin:0;min-height:100dvh;display:grid;place-items:center;padding:24px;background:var(--bg);color:var(--fg);font:16px/1.7 system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif}
-main{width:100%;max-width:560px}
-h1{margin:0 0 4px;font-size:28px;font-weight:600;letter-spacing:-.01em}
-p{margin:0 0 20px;color:var(--sub)}
-pre{margin:0 0 24px;padding:14px 16px;overflow-x:auto;background:var(--code);border:1px solid var(--line);border-radius:10px;font:13px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--fg)}
-a{color:var(--fg);text-underline-offset:3px}
-a:focus-visible{outline:2px solid currentColor;outline-offset:3px;border-radius:2px}
-</style>
-</head>
-<body>
-<main>
-<h1>img-parameter</h1>
-<p>URLのパラメータで画像を加工して返すAPI</p>
-<pre>https://img-parameter.wks.lapius7.com/
-  ?url=https://example.com/photo.jpg
-  &amp;w=400&amp;h=300&amp;fit=cover&amp;f=webp</pre>
-<a href="${REPO_URL}">GitHub</a>
-</main>
-</body>
-</html>
-`;
-
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
 		if (request.method !== "GET" && request.method !== "HEAD") {
@@ -169,7 +134,7 @@ export default {
 		}
 		const reqUrl = new URL(request.url);
 		if (reqUrl.pathname !== "/") return new Response("Not Found", { status: 404 });
-		if (!reqUrl.search) return new Response(TOP_PAGE, { headers: { "content-type": "text/html; charset=utf-8", "cache-control": "public, max-age=3600" } });
+		if (!reqUrl.search) return env.ASSETS.fetch(request);
 
 		// フォーマット自動選択は Accept に依存するので、キャッシュキーに結果形式を含める
 		if (env.SIGNING_SECRET && !(await verifySig(reqUrl.search, env.SIGNING_SECRET))) {

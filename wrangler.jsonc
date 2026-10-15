@@ -10,6 +10,8 @@
 		{ "pattern": "img-parameter.wks.lapius7.com", "custom_domain": true }
 	],
 	"images": { "binding": "IMAGES" },
+	// パラメータなしの / だけ Worker を通し、操作画面(public/)を ASSETS から返す
+	"assets": { "directory": "./public", "binding": "ASSETS", "run_worker_first": ["/"] },
 	"vars": {
 		// カンマ区切りで取得元ホストを制限（空なら全許可）。例: "example.com,cdn.example.com"
 		"ALLOWED_HOSTS": "",

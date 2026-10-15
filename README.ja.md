@@ -2,7 +2,7 @@
 
 [English](README.md)
 
-URL のクエリで画像を加工して返す、Cloudflare Workers 用の API です。元画像の URL と加工内容を URL に書くだけで、加工後の画像を取得できます。専用のビルドや事前変換は要りません。生成した URL は、そのまま `<img src>` や CSS の `background-image` に使えます。
+URL のクエリで画像を加工して返す、Cloudflare Workers 用の API です。元画像の URL と加工内容を URL に書くだけで、加工後の画像を取得できます。事前変換は要りません。生成した URL は、そのまま `<img src>` や CSS の `background-image` に使えます。
 
 ```html
 <img
@@ -10,6 +10,10 @@ URL のクエリで画像を加工して返す、Cloudflare Workers 用の API �
   alt="サンプル画像"
 >
 ```
+
+## ブラウザで URL を作る
+
+パラメータを付けずに [img-parameter.wks.lapius7.com](https://img-parameter.wks.lapius7.com/) を開くと、フォームとプレビューが表示されます。オプションを変えて仕上がりを確かめ、生成された URL をコピーして使えます。
 
 ## AI に頼むだけ
 
@@ -106,8 +110,9 @@ GET https://img-parameter.wks.lapius7.com/?url=<画像のURL>&<加工パラメ�
 
 ```sh
 pnpm install
+pnpm build    # フォーム UI を public/ にビルド
 pnpm dev      # ローカルで起動
-pnpm deploy   # Cloudflare にデプロイ
+pnpm deploy   # ビルドしてから Cloudflare にデプロイ
 ```
 
 公開するドメインは `wrangler.jsonc` の `routes` で変更します。

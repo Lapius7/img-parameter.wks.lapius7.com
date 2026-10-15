@@ -7,7 +7,9 @@
     "types": ["./worker-configuration.d.ts"],
     "strict": true,
     "noEmit": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": { "@/*": ["./web/src/*"] }
   },
   "include": ["src", "worker-configuration.d.ts"]
 }
