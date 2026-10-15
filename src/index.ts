@@ -127,7 +127,7 @@ function checkSource(raw: string | null, env: Env): URL {
 	return src;
 }
 
-const REPO_URL = "https://github.com/Lapius7/img-parameter";
+const REPO_URL = "https://github.com/Lapius7/img-parameter.wks.lapius7.com";
 
 const TOP_PAGE = `<!doctype html>
 <html lang="ja">
