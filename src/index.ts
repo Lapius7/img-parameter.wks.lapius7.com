@@ -9,6 +9,14 @@ const FORMATS: Record<string, string> = {
 const FITS = ["scale-down", "contain", "cover", "crop", "pad"] as const;
 const GRAVITIES = ["auto", "left", "right", "top", "bottom", "center"] as const;
 
+// キャッシュキーに使うパラメータ(これ以外は無視する)
+const KNOWN_PARAMS = new Set([
+	"url", "w", "h", "fit", "gravity", "f", "q", "dpr", "rotate", "blur", "brightness",
+	"contrast", "saturation", "gamma", "sharpen", "trim", "bg", "r",
+]);
+// URL 全体の上限。巨大なクエリでの負荷を避ける
+const MAX_URL_LENGTH = 2048;
+
 class BadRequest extends Error {}
 
 // Images は SVG を描画できないので、角丸マスク用の PNG を自前で作る
@@ -134,6 +142,7 @@ export default {
 		}
 		const reqUrl = new URL(request.url);
 		if (reqUrl.pathname !== "/") return new Response("Not Found", { status: 404 });
+		if (request.url.length > MAX_URL_LENGTH) return new Response("URI Too Long", { status: 414 });
 		// url がなければトップページ(?ref= などの OGP 更新用パラメータも許可)
 		if (!reqUrl.searchParams.has("url")) return env.ASSETS.fetch(request);
 
@@ -156,10 +165,28 @@ export default {
 		}
 		// 角丸は透過が要るので、透過できない形式は WebP に切り替える
 		if (p.get("r") && (format === "jpeg" || format === "jpg" || format === "gif")) format = "webp";
-		const cacheKey = new Request(`${reqUrl.origin}${reqUrl.pathname}?${p.toString()}&__f=${format}`);
+		// 未知のパラメータ(ref, utm_* など)と並び順の違いは同じキャッシュにまとめ、キャッシュ回避の連打を防ぐ
+		const norm = new URLSearchParams();
+		for (const k of [...KNOWN_PARAMS].sort()) {
+			const v = p.get(k);
+			if (v !== null && v !== "") norm.set(k, v);
+		}
+		const cacheKey = new Request(`${reqUrl.origin}${reqUrl.pathname}?${norm.toString()}&__f=${format}`);
 		const cache = caches.default;
 		const hit = await cache.match(cacheKey);
 		if (hit) return hit;
+
+		// キャッシュにない(=加工や取得が走る)リクエストだけ IP ごとに制限する
+		if (env.RATE_LIMITER) {
+			const ip = request.headers.get("CF-Connecting-IP") ?? "unknown";
+			const { success } = await env.RATE_LIMITER.limit({ key: ip });
+			if (!success) {
+				return new Response("rate limit exceeded", {
+					status: 429,
+					headers: { "Retry-After": "60", "Cache-Control": "no-store" },
+				});
+			}
+		}
 
 		try {
 			let fallbackStatus = 0;

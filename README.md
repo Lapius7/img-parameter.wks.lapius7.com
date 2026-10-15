@@ -131,6 +131,13 @@ Set these under `vars` in `wrangler.jsonc`.
 
 For a public deployment, set `ALLOWED_HOSTS` so that others cannot use your instance to process arbitrary images.
 
+## Abuse protection
+
+- Requests that miss the cache (so image processing runs) are limited per IP to 30 per 60 seconds, then return `429` with `Retry-After`. Cached responses are not limited. Change the limit in `ratelimits` in `wrangler.jsonc`.
+- Unknown parameters such as `ref` or `utm_*` and parameter order are ignored in the cache key, so adding random parameters does not bypass the cache.
+- URLs longer than 2048 characters return `414`.
+- To stop floods before they reach the Worker, add a Cloudflare WAF rate limiting rule for this hostname.
+
 ## Presets
 
 Define presets as JSON in `PRESETS`. Parameters in the URL override the preset's values.
