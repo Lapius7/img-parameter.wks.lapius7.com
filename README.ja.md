@@ -11,6 +11,19 @@ URL のクエリで画像を加工して返す、Cloudflare Workers 用の API �
 >
 ```
 
+## AI に頼むだけ
+
+パラメータを覚える必要はありません。AI に [AI.md](https://raw.githubusercontent.com/Lapius7/img-parameter.wks.lapius7.com/main/AI.md) のリンクと、画像の URL、やりたい加工を渡すと、そのまま使える URL を返します。
+
+```
+https://raw.githubusercontent.com/Lapius7/img-parameter.wks.lapius7.com/main/AI.md を読んで、
+https://example.com/photo.jpg を 300px の円形にして、少し明るくして。
+```
+
+```
+https://img-parameter.wks.lapius7.com/?url=https://example.com/photo.jpg&w=300&h=300&fit=cover&r=full&brightness=1.2
+```
+
 ## 特徴
 
 - リサイズ、切り抜き、回転、ぼかし、明るさ・コントラストなどの調整を、URL のパラメータで指定できます
@@ -83,10 +96,6 @@ GET https://img-parameter.wks.lapius7.com/?url=<画像のURL>&<加工パラメ�
 | `500` | 画像の加工に失敗した |
 
 成功時は `Cache-Control: public, max-age=86400, s-maxage=604800` を付けて返します。`f` を省略した場合は `Vary: Accept` も付けます。
-
-## AI アシスタントで使う
-
-[AI.md](AI.md)（raw の URL は `https://raw.githubusercontent.com/Lapius7/img-parameter.wks.lapius7.com/main/AI.md`）のリンクを、画像の URL とやりたい加工と一緒に AI に渡すと、使える形の URL を返します。
 
 ## セットアップ
 

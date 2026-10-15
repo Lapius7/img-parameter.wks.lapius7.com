@@ -11,6 +11,19 @@ An image transform API for Cloudflare Workers. Put the source image URL and the 
 >
 ```
 
+## Just ask an AI
+
+No need to learn the parameters. Give an AI assistant the link to [AI.md](https://raw.githubusercontent.com/Lapius7/img-parameter.wks.lapius7.com/main/AI.md), your image URL, and the edit you want. It returns a ready-to-use URL.
+
+```
+Read https://raw.githubusercontent.com/Lapius7/img-parameter.wks.lapius7.com/main/AI.md
+and make https://example.com/photo.jpg a 300px circle, slightly brighter.
+```
+
+```
+https://img-parameter.wks.lapius7.com/?url=https://example.com/photo.jpg&w=300&h=300&fit=cover&r=full&brightness=1.2
+```
+
 ## Features
 
 - Resize, crop, rotate, blur, and adjust brightness and contrast with URL parameters
@@ -83,10 +96,6 @@ Out-of-range or invalid values return `400` with the reason.
 | `500` | Image processing failed |
 
 Successful responses carry `Cache-Control: public, max-age=86400, s-maxage=604800`. When `f` is omitted, they also carry `Vary: Accept`.
-
-## Use with AI assistants
-
-Give an assistant the link to [AI.md](AI.md) (or its raw URL, `https://raw.githubusercontent.com/Lapius7/img-parameter.wks.lapius7.com/main/AI.md`) together with your image URL and the edit you want. It returns a ready-to-use URL.
 
 ## Setup
 
