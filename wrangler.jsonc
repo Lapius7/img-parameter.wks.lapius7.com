@@ -1,0 +1,22 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "img-parameter",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-10-06",
+	"compatibility_flags": ["global_fetch_strictly_public"],
+	"observability": { "enabled": true },
+	"workers_dev": false,
+	"routes": [
+		{ "pattern": "img-parameter.wks.lapius7.com", "custom_domain": true }
+	],
+	"images": { "binding": "IMAGES" },
+	"vars": {
+		// カンマ区切りで取得元ホストを制限（空なら全許可）。例: "example.com,cdn.example.com"
+		"ALLOWED_HOSTS": "",
+		"MAX_SOURCE_BYTES": "20000000",
+		// 名前付きプリセット(JSON)。例: {"thumb":"w=200&h=200&fit=cover&f=webp"}
+		"PRESETS": "{\"thumb\":\"w=200&h=200&fit=cover&f=webp\",\"hero\":\"w=1600&q=80&f=avif\"}",
+		// 元画像を取得できないときに返す代替画像のURL(空なら404/502を返す)
+		"FALLBACK_URL": ""
+	}
+}
