@@ -13,7 +13,7 @@ An image transform API for Cloudflare Workers. Put the source image URL and the 
 
 ## Build a URL in the browser
 
-Open [img-parameter.wks.lapius7.com](https://img-parameter.wks.lapius7.com/) with no parameters. Change the options in the form, check the preview, and copy the generated URL.
+Open [img-parameter.wks.lapius7.com](https://img-parameter.wks.lapius7.com/) with no parameters. Change the options in the form, check the preview, and copy the generated URL. A query without `url`, such as `?ref=`, also returns the top page, so you can use it to refresh social OGP caches.
 
 ## Just ask an AI
 

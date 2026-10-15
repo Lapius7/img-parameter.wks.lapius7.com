@@ -13,7 +13,7 @@ URL のクエリで画像を加工して返す、Cloudflare Workers 用の API �
 
 ## ブラウザで URL を作る
 
-パラメータを付けずに [img-parameter.wks.lapius7.com](https://img-parameter.wks.lapius7.com/) を開くと、フォームとプレビューが表示されます。オプションを変えて仕上がりを確かめ、生成された URL をコピーして使えます。
+パラメータを付けずに [img-parameter.wks.lapius7.com](https://img-parameter.wks.lapius7.com/) を開くと、フォームとプレビューが表示されます。オプションを変えて仕上がりを確かめ、生成された URL をコピーして使えます。 `?ref=` のように `url` を含まないクエリでもトップページを返すので、SNS の OGP キャッシュを更新するときに使えます。
 
 ## AI に頼むだけ
 

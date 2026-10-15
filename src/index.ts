@@ -134,7 +134,8 @@ export default {
 		}
 		const reqUrl = new URL(request.url);
 		if (reqUrl.pathname !== "/") return new Response("Not Found", { status: 404 });
-		if (!reqUrl.search) return env.ASSETS.fetch(request);
+		// url がなければトップページ(?ref= などの OGP 更新用パラメータも許可)
+		if (!reqUrl.searchParams.has("url")) return env.ASSETS.fetch(request);
 
 		// フォーマット自動選択は Accept に依存するので、キャッシュキーに結果形式を含める
 		if (env.SIGNING_SECRET && !(await verifySig(reqUrl.search, env.SIGNING_SECRET))) {
